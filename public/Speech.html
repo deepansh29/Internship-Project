@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Menu Page with Voice Assistant, Speech-to-Text, and Camera Access
+    </title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f4fa;
+        display: flex;
+        min-height: 100vh;
+      }
+
+      header {
+        background-color: #4169e1;
+        padding: 20px;
+        text-align: center;
+        color: white;
+        font-size: 28px;
+        font-weight: bold;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        z-index: 1000;
+      }
+
+      nav {
+        background-color: #1e3a8a;
+        width: 200px;
+        padding-top: 80px; /* Adjusted for fixed header */
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 999;
+      }
+
+      nav a {
+        display: block;
+        color: white;
+        text-align: left;
+        padding: 14px 20px;
+        text-decoration: none;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      nav a:hover {
+        background-color: #5a67d8;
+        color: #e2e8f0;
+      }
+
+      .container {
+        margin-left: 220px;
+        padding: 80px 20px 20px 20px; /* Adjusted for fixed header */
+        flex-grow: 1;
+      }
+
+      .menu-item {
+        display: none;
+      }
+
+      .active {
+        display: block;
+      }
+
+      /* Home Page Section */
+      #home h2 {
+        text-align: center;
+        font-size: 36px;
+        color: #4169e1;
+        margin-bottom: 20px;
+      }
+
+      .home-drawing {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 40px;
+      }
+
+      .home-drawing img {
+        max-width: 100%;
+        max-height: 400px;
+        border-radius: 20px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Other Sections */
+      /* Speech to Text Section */
+      .speech-container {
+        text-align: center;
+        margin-top: 50px;
+      }
+
+      #start-btn {
+        padding: 15px 30px;
+        font-size: 18px;
+        color: #fff;
+        background-color: #4169e1;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      #start-btn:hover {
+        background-color: #5a67d8;
+      }
+
+      #result {
+        margin-top: 30px;
+        font-size: 20px;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 5px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        color: #1e3a8a;
+      }
+
+      #result:empty {
+        display: none;
+      }
+
+      /* Camera Access Section */
+      .camera-container {
+        text-align: center;
+        margin-top: 50px;
+      }
+
+      video {
+        width: 100%;
+        max-width: 600px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        margin-bottom: 20px;
+      }
+
+      canvas {
+        display: none;
+      }
+
+      #capture-btn {
+        padding: 15px 30px;
+        font-size: 18px;
+        color: #fff;
+        background-color: #4169e1;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      #capture-btn:hover {
+        background-color: #5a67d8;
+      }
+
+      #photo {
+        margin-top: 20px;
+        width: 100%;
+        max-width: 600px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      /* ChatGPT Voice Assistant Section */
+      .voice-assistant-container {
+        text-align: center;
+        margin-top: 50px;
+      }
+
+      #response {
+        margin-top: 20px;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #ffffff;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        width: 100%;
+        text-align: center;
+        color: #1e3a8a;
+      }
+
+      /* Docker Metrics Section */
+      .metrics-container {
+        text-align: center;
+        margin-top: 50px;
+      }
+
+      canvas {
+        max-width: 600px;
+        margin: 20px auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <header>My Menu Page</header>
+
+    <nav>
+      <a href="#" onclick="showSection('home')">Home</a>
+      <a href="#" onclick="showSection('about')">About</a>
+      <a href="#" onclick="showSection('speech-to-text')">Speech to Text</a>
+      <a href="#" onclick="showSection('camera-access')">Camera Access</a>
+      <a href="#" onclick="showSection('custom-search')">Custom Search</a>
+      <a href="#" onclick="showSection('voice-assistant')">Voice Assistant</a>
+      <a href="#" onclick="showSection('metrics')">Metrics</a>
+      <a href="#" onclick="showSection('contact')">Contact</a>
+    </nav>
+
+    <div class="container">
+      <div id="home" class="menu-item active">
+        <h2>Welcome to My Website</h2>
+        <div class="home-drawing">
+          <img src="https://www.example.com/your-beautiful-drawing.jpg" alt="Beautiful Drawing" />
+        </div>
+      </div>
+
+      <div id="about" class="menu-item">
+        <h2>About Us</h2>
+        <p>This section contains information about us.</p>
+      </div>
+
+      <div id="speech-to-text" class="menu-item">
+        <div class="speech-container">
+          <h2>Speech to Text Example</h2>
+          <button id="start-btn">Start Listening</button>
+          <p id="result"></p>
+        </div>
+      </div>
+
+      <div id="camera-access" class="menu-item">
+        <div class="camera-container">
+          <h2>Camera Access and Photo Capture</h2>
+          <video id="video" autoplay></video>
+          <button id="capture-btn">Capture Photo</button>
+          <canvas id="canvas"></canvas>
+          <img id="photo" alt="Captured Photo" />
+
+          <h2>Live Camera Stream</h2>
+          <video id="live-video" autoplay></video>
+        </div>
+      </div>
+
+      <div id="custom-search" class="menu-item">
+        <div class="search-container">
+          <h2>Custom Search Engine</h2>
+          <input type="text" id="search-input" placeholder="Search..." />
+          <button id="search-btn">Search</button>
+          <div id="results"></div>
+        </div>
+      </div>
+
+      <div id="voice-assistant" class="menu-item">
+        <div class="voice-assistant-container">
+          <h2>ChatGPT Voice Assistant</h2>
+          <button id="start-recording">🎙️ Start Recording</button>
+          <div id="response"></div>
+        </div>
+      </div>
+
+      <div id="metrics" class="menu-item">
+        <div class="metrics-container">
+          <h2>Docker Metrics Dashboard</h2>
+          <canvas id="memoryChart"></canvas>
+          <canvas id="statusChart"></canvas>
+          <canvas id="storageChart"></canvas>
+        </div>
+      </div>
+
+      <div id="contact" class="menu-item">
+        <h2>Contact Us</h2>
+        <p>This section contains contact information.</p>
+      </div>
+    </div>
+
+    <script src="Text_Converter.js"></script>
+    <script src="Camera_access.js"></script>
+    <script src="Custom_search.js"></script>
+    <script src="Gpt_recognition.js"></script>
+    <script src="live_stream.js"></script>
+    <!-- ? <script src="metrics.js"></script> -->
+    <script>
+      function showSection(sectionId) {
+        const sections = document.querySelectorAll(".menu-item");
+        sections.forEach((section) => {
+          section.classList.remove("active");
+        });
+
+        const activeSection = document.getElementById(sectionId);
+        activeSection.classList.add("active");
+      }
+    </script>
+  </body>
+</html>
